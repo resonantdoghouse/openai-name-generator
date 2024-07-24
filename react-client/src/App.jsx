@@ -1,21 +1,21 @@
-import { useState } from 'react';
-import axios from 'axios';
-import './App.css';
+import { useState } from "react";
+import axios from "axios";
+import "./App.css";
 
 function App() {
   const [count, setCount] = useState(0);
-  const [animalInput, setAnimalInput] = useState('');
-  const [nameSuggestions, setNameSuggestions] = useState('');
+  const [animalInput, setAnimalInput] = useState("");
+  const [nameSuggestions, setNameSuggestions] = useState("");
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
 
     try {
       if (count === 10) {
-        return console.log('limit reached');
+        return console.log("limit reached");
       }
 
-      const response = await axios.post('http://localhost:5050/api/generate', {
+      const response = await axios.post("http://localhost:5050/api/generate", {
         animal: animalInput,
       });
 
@@ -30,7 +30,7 @@ function App() {
       }
 
       setCount(count + 1);
-      setAnimalInput('');
+      setAnimalInput("");
     } catch (error) {
       console.error(error);
       alert(error.message);
@@ -43,15 +43,17 @@ function App() {
       <p>You have used this app {count} times</p>
 
       <form onSubmit={handleFormSubmit}>
-        <input
-          type="text"
-          name="animal"
-          placeholder="enter an animal"
-          value={animalInput}
-          onChange={(e) => {
-            setAnimalInput(e.target.value);
-          }}
-        />
+        <div>
+          <textarea
+            type="text"
+            name="animal"
+            placeholder="enter animal description"
+            value={animalInput}
+            onChange={(e) => {
+              setAnimalInput(e.target.value);
+            }}
+          ></textarea>
+        </div>
         <button type="submit">Generate Names</button>
       </form>
       {nameSuggestions.length > 0 && <p>{nameSuggestions}</p>}
